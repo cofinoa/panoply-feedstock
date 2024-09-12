@@ -84,27 +84,67 @@ java -Xms512m -Xmx4g \$JAVA_OPTS -cp $PREFIX/lib/java/PanoplyJ/jars/Panoply.jar 
 EOF
 chmod +x ${PREFIX}/bin/ncj-panoply-catalogcrawler
 
-## WINDOWS .BAT scripts
-### TODO: a better method should be use
-## WINDOWS
+# Windows batch files
 
 cat <<EOF >${PREFIX}/bin/panoply.bat
 @echo off
-REM Panoply Data Viewer
-REM
-REM Usage:
-REM   panoply [-log (TRACE|DEBUG|INFO|WARN|ERROR)] [-multi] [-path DATAPATH] [--] [DATAFILENAME [DATAFILENAME ...]]
-REM   panoply -script SCRIPTFILE [-log (TRACE|DEBUG|INFO|WARN|ERROR)] [-gui | -server] [-grib (strict|lenient)] [-enginelist] [-engine ENGINE] [-enginepath ENGINEPATH] [--]
-
-java -Xms512m -Xmx4g %JAVA_OPTS% -cp $PREFIX/lib/java/PanoplyJ/jars/Panoply.jar gov.nasa.giss.panoply.Panoply %*
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar gov.nasa.giss.panoply.Panoply   %*
 EOF
+unix2dos "${PREFIX}/bin/panoply.bat"
 
 cat <<EOF >${PREFIX}/bin/panoplycl.bat
 @echo off
-REM Panoply Data Viewer (Command Line Interpreter)
-REM
-REM Usage:
-REM   panoplycl [-script SCRIPTFILE] [-log (TRACE|DEBUG|INFO|WARN|ERROR)] [-gui | -server] [-grib (strict|lenient)] [-enginelist] [-engine ENGINE] [-enginepath ENGINEPATH] [--]
-
-java -Xms512m -Xmx4g %JAVA_OPTS% -cp $PREFIX/lib/java/PanoplyJ/jars/Panoply.jar gov.nasa.giss.panoply.PanoplyCL %*
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar gov.nasa.giss.panoply.PanoplyCL %*
 EOF
+unix2dos "${PREFIX}/bin/panoplycl.bat"
+
+# REM netcdf-java tools included with Panoply bundle
+# REM echo java -Xms512m -Xmx4g %JAVA_OPTS% -cp %PREFIX%\lib\java\PanoplyJ\jars\Panoply.jar ucar.nc2.ui.ToolsUI                         %* > "%SCRIPTS%\ncj-toolsui.bat"
+
+cat <<EOF >${PREFIX}/bin/ncj-nccopy.bat
+@echo off
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar ucar.nc2.write.Nccopy                       %*
+EOF
+unix2dos "${PREFIX}/bin/ncj-nccopy.bat"
+
+cat <<EOF >${PREFIX}/bin/ncj-ncdump.bat
+@echo off
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar ucar.nc2.NCdumpW                            %*
+EOF
+unix2dos "${PREFIX}/bin/ncj-ncdump.bat"
+
+cat <<EOF >${PREFIX}/bin/ncj-nccompare.bat
+@echo off
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar ucar.nc2.util.CompareNetcdf2                %*
+EOF
+unix2dos "${PREFIX}/bin/ncj-nccompare.bat"
+
+cat <<EOF >${PREFIX}/bin/ncj-bufrspliter.bat
+@echo off
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar ucar.nc2.iosp.bufr.writer.BufrSplitter      %*
+EOF
+unix2dos "${PREFIX}/bin/ncj-bufrspliter.bat"
+
+cat <<EOF >${PREFIX}/bin/ncj-cfpointwriter.bat
+@echo off
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar ucar.nc2.ft.point.writer.CFPointWriter      %*
+EOF
+unix2dos "${PREFIX}/bin/ncj-cfpointwriter.bat"
+
+cat <<EOF >${PREFIX}/bin/ncj-gribcdmindex.bat
+@echo off
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar ucar.nc2.grib.collection.GribCdmIndex       %*
+EOF
+unix2dos "${PREFIX}/bin/ncj-gribcdmindex.bat"
+
+cat <<EOF >${PREFIX}/bin/ncj-featurescan.bat
+@echo off
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar ucar.nc2.ft2.scan.FeatureScan               %*
+EOF
+unix2dos "${PREFIX}/bin/ncj-featurescan.bat"
+
+cat <<EOF >${PREFIX}/bin/ncj-catalogcrawler.bat
+@echo off
+java -Xms512m -Xmx4g %JAVA_OPTS% -cp %CONDA_PREFIX%\\lib\\java\\PanoplyJ\\jars\\Panoply.jar thredds.client.catalog.tools.CatalogCrawler %*
+EOF
+unix2dos "${PREFIX}/bin/ncj-catalogcrawler.bat"
